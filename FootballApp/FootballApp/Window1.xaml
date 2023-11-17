@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FootballApp"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Login" Height="300" Width="400">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Text="Username:" Margin="5"/>
+		<TextBox x:Name="txtUsername" Grid.Row="0" Margin="5"/>
+
+		<TextBlock Text="Password:" Grid.Row="1" Margin="5"/>
+		<PasswordBox x:Name="txtPassword" Grid.Row="1" Margin="5"/>
+
+		<Button Content="Login" Grid.Row="2" Margin="5" Click="Login_Click"/>
+	</Grid>
 </Window>
