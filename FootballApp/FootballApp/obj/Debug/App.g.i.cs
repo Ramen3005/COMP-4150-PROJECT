@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using FootballApp;
+using FootBallAppGUI;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -32,7 +32,7 @@ using System.Windows.Shapes;
 using System.Windows.Shell;
 
 
-namespace FootballApp {
+namespace FootBallAppGUI {
     
     
     /// <summary>
@@ -61,7 +61,7 @@ namespace FootballApp {
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
         public static void Main() {
-            FootballApp.App app = new FootballApp.App();
+            FootBallAppGUI.App app = new FootBallAppGUI.App();
             app.InitializeComponent();
             app.Run();
         }
