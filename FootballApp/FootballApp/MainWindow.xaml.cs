@@ -33,9 +33,9 @@ namespace FootBallAppGUI
             var dlg = new Login();
             dlg.Owner = this;
             dlg.ShowDialog();
-            if(dlg.DialogResult == true)
+            if (dlg.DialogResult == true)
             {
-                if(userData.LogIn(dlg.txtUsername.Text, dlg.txtPassword.Password) == true)
+                if (userData.LogIn(dlg.txtUsername.Text, dlg.txtPassword.Password) == true)
                 {
                     MessageBox.Show("Logged in as user #" + userData.UserID);
                     loggedInUserID = userData.UserID;
