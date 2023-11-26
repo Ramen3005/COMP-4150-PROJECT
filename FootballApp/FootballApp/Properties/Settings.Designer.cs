@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FootBallAppGUI.Properties {
+namespace FootballApp.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,11 +26,11 @@ namespace FootBallAppGUI.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("GitHub\\Football-Insights-Premier-League\\FootBallAppGUI\\FootBallAppGUI\\FootBall_Data.mdf" +
-            "")]
-        public string DataBase {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\FootballData." +
+            "mdf;Integrated Security=True;Connect Timeout=30")]
+        public string asConnectionString {
             get {
-                return ((string)(this["DataBase"]));
+                return ((string)(this["asConnectionString"]));
             }
         }
     }

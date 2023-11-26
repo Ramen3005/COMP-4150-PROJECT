@@ -1,37 +1,30 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.SQLite;
 using System.Diagnostics;
-using System.Xml.Linq;
 
 internal class UserInfo
 {
     public int UserCheck(string userName)
     {
-        var conn = new SQLiteConnection();
+        var conn = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString);
         try
         {
-            using (SQLiteCommand cmd = new SQLiteCommand())
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "Select UserID from UserData where " + "UserName = @UserName";
+            cmd.Parameters.AddWithValue("@UserName", userName);
+            conn.Open();
+            int userId = (int)cmd.ExecuteScalar();
+
+            if (userId > 0)
             {
-                cmd.Connection = conn;
-                cmd.CommandText = "SELECT UserID FROM UserData WHERE UserName = @UserName";
-                cmd.Parameters.AddWithValue("@UserName", userName);
-
-                conn.Open();
-                object result = cmd.ExecuteScalar();
-
-                if (result != null && result != DBNull.Value)
-                {
-                    int userId = Convert.ToInt32(result);
-                    return userId;
-                }
-                else
-                {
-                    return -1;
-                }
+                return userId;
             }
-
+            else
+            {
+                return -1;
+            }
         }
         catch (Exception ex)
         {
@@ -46,7 +39,7 @@ internal class UserInfo
     }
     public int LogIn(string userName, string password)
     {
-        var conn = new SqlConnection(Properties.Settings.Default.DataBase);
+        var conn = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString);
         try
         {
             SqlCommand cmd = new SqlCommand();
