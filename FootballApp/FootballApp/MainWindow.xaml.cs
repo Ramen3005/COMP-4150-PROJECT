@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FootballApp;
+using FootBallAppGUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,18 +35,29 @@ namespace FootBallAppGUI
             var dlg = new Login();
             dlg.Owner = this;
             dlg.ShowDialog();
+
             if (dlg.DialogResult == true)
             {
                 if (userData.LogIn(dlg.txtUsername.Text, dlg.txtPassword.Password) == true)
                 {
                     MessageBox.Show("Logged in as user #" + userData.UserID);
                     loggedInUserID = userData.UserID;
-                    /*if(userData.IsPremium(userData.UserID) || userData.IsNotPremium(userData.UserID))
-                    {
-                        //make it so that they cannot see all that stats
-                    }
-                    */
 
+                    if (userData.IsPremium(loggedInUserID) || userData.IsNotPremium(loggedInUserID))
+                    {
+                        // Depending on the user type, perform actions
+                        if (userData.IsPremium(loggedInUserID))
+                        {
+                            // Code for Premium user
+                        }
+                        else
+                        {
+                            // Code for non-Premium user
+                            BasicView basicView = new BasicView(userData);
+                            basicView.Show();
+                            this.Close();
+                        }
+                    }
                 }
                 else
                 {
@@ -62,3 +75,5 @@ namespace FootBallAppGUI
         }
     }
 }
+
+

@@ -66,9 +66,29 @@ internal class UserInfo
         }
     }
 
-    internal string UserType(int userId)
+    public string UserType(int userId)
     {
-        throw new NotImplementedException();
+        var conn = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString);
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT Type FROM UserData WHERE UserID = @UserID";
+            cmd.Parameters.AddWithValue("@UserID", userId);
+            conn.Open();
+            string type = (string)cmd.ExecuteScalar();
+            return type;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.ToString());
+            return "Not a user";
+        }
+        finally
+        {
+            if (conn.State == ConnectionState.Open) ;
+            conn.Close();
+        }
+
     }
 }
-

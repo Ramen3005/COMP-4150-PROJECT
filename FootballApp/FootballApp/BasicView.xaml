@@ -1,0 +1,26 @@
+﻿<Window x:Class="FootballApp.BasicView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FootballApp"
+        mc:Ignorable="d"
+        Title="Basic User" Height="450" Width="800" Background="#483D8B">
+    <Grid>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0" Visibility="Visible">
+            <TextBox x:Name="HomeTeamTextBox" Width="150" Margin="0,0,0,10" Text="Enter Home Team" GotFocus="HomeTeamTextBox_GotFocus" LostFocus="HomeTeamTextBox_LostFocus"/>
+            <Button Content="Search" Click="SearchButton_Click" Width="80"/>
+        </StackPanel>
+
+        <DataGrid x:Name="DataGrid" Margin="10,79,10,10" AutoGenerateColumns="False" HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Path=date, StringFormat={}{0:MM/dd/yyyy}}" />
+                <DataGridTextColumn Header="Home Team" Binding="{Binding Path=home_team}" />
+                <DataGridTextColumn Header="Away Team" Binding="{Binding Path=away_team}" />
+                <DataGridTextColumn Header="Result (Half-Time)" Binding="{Binding Path=result_ht}" />
+                <DataGridTextColumn Header="Result (Full-Time)" Binding="{Binding Path=result_full}" />
+                
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
