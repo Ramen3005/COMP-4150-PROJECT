@@ -12,19 +12,23 @@ internal class UserInfo
         {
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "Select UserID from UserData where " + "UserName = @UserName";
+            cmd.CommandText = "Select UserID from UserData where UserName = @UserName";
             cmd.Parameters.AddWithValue("@UserName", userName);
             conn.Open();
-            int userId = (int)cmd.ExecuteScalar();
 
-            if (userId > 0)
+            // Use DBNull.Value to handle cases where ExecuteScalar returns null
+            object result = cmd.ExecuteScalar();
+
+            if (result != null && result != DBNull.Value)
             {
-                return userId;
+                int userId;
+                if (int.TryParse(result.ToString(), out userId))
+                {
+                    return userId;
+                }
             }
-            else
-            {
-                return -1;
-            }
+
+            return -1;
         }
         catch (Exception ex)
         {
@@ -44,20 +48,27 @@ internal class UserInfo
         {
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "Select UserID from UserData where "
-                + " UserName = @UserName and Password = @Password ";
+            cmd.CommandText = "SELECT UserID FROM UserData WHERE UserName = @UserName AND Password = @Password";
             cmd.Parameters.AddWithValue("@UserName", userName);
             cmd.Parameters.AddWithValue("@Password", password);
             conn.Open();
-            int userId = (int)cmd.ExecuteScalar();
-            if (userId > 0) return userId;
-            else return -1;
+
+            object result = cmd.ExecuteScalar();
+
+            // Check if the result is null before trying to convert
+            if (result != null)
+            {
+                return (int)result;
+            }
+            else
+            {
+                return -1; // or any other appropriate value for indicating failure
+            }
         }
         catch (Exception ex)
         {
             Debug.WriteLine(ex.ToString());
-
-            return -1;
+            return -1; // or any other appropriate value for indicating failure
         }
         finally
         {
@@ -65,6 +76,7 @@ internal class UserInfo
                 conn.Close();
         }
     }
+
 
     public string UserType(int userId)
     {

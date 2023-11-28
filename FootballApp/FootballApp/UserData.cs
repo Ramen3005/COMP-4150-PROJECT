@@ -16,7 +16,7 @@ namespace FootBallAppGUI
         public Boolean LoggedIn { get; set; }
         public bool Accurate { get; set; }
 
-        public Boolean LogIn(string loginName, string passWord)
+        public bool LogIn(string loginName, string passWord)
         {
             Accurate = true;
             var dbUser = new UserInfo();
@@ -36,10 +36,11 @@ namespace FootBallAppGUI
                 }
             }
 
-            UserID = dbUser.LogIn(loginName, passWord);
+            int? userId = dbUser.LogIn(loginName, passWord);
 
-            if (UserID > 0)
+            if (userId.HasValue && userId.Value > 0)
             {
+                UserID = userId.Value;
                 Username = loginName;
                 Password = passWord;
                 LoggedIn = true;
@@ -61,6 +62,7 @@ namespace FootBallAppGUI
                 return false;
             }
         }
+
         public Boolean passReqs(string Password)
         {
             if (Password.Length > 5 && Password.Any(char.IsDigit) && Password.All(char.IsLetterOrDigit) && ((Password[0] >= 65 && Password[0] <= 90) || (Password[0] >= 97 && Password[0] <= 122)))
