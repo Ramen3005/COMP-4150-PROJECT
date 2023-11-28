@@ -48,7 +48,9 @@ namespace FootBallAppGUI
                         // Depending on the user type, perform actions
                         if (userData.IsPremium(loggedInUserID))
                         {
-                            // Code for Premium user
+                            PremiumView premiumView = new PremiumView(userData);
+                            premiumView.Show();
+                            this.Close();
                         }
                         else
                         {

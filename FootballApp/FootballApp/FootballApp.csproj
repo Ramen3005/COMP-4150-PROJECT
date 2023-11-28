@@ -93,6 +93,9 @@
     <Compile Include="BasicView.xaml.cs">
       <DependentUpon>BasicView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PremiumView.xaml.cs">
+      <DependentUpon>PremiumView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInfo.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="Login.xaml.cs">
@@ -115,6 +118,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PremiumView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
