@@ -8,7 +8,8 @@
         Title="Basic" Height="450" Width="800" Background="#483D8B">
     <Grid>
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0" Visibility="Visible">
-            <TextBox x:Name="HomeTeamTextBox" Width="150" Margin="0,0,0,10" Text="Enter Home Team" GotFocus="HomeTeamTextBox_GotFocus" LostFocus="HomeTeamTextBox_LostFocus"/>
+            <TextBox x:Name="HomeTeamTextBox" Width="150" Margin="0,0,0,2" Text="" GotFocus="HomeTeamTextBox_GotFocus" LostFocus="HomeTeamTextBox_LostFocus"/>
+            <TextBox x:Name="AwayTeamTextBox" Width="150" Margin="0,0,0,01" Text="" GotFocus="AwayTeamTextBox_GotFocus" LostFocus="AwayTeamTextBox_LostFocus"/>
             <Button Content="Search" Click="SearchButton_Click" Width="80"/>
         </StackPanel>
 
@@ -24,5 +25,8 @@
                 
             </DataGrid.Columns>
         </DataGrid>
+        <Label Content="Home Team" HorizontalAlignment="Left" Margin="243,15,0,0" VerticalAlignment="Top"/>
+        <Label Content="Away Team" HorizontalAlignment="Left" Margin="243,34,0,0" VerticalAlignment="Top" Cursor=""/>
+        <Label Content="Please Enter Only One Team" HorizontalAlignment="Left" Margin="319,-5,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

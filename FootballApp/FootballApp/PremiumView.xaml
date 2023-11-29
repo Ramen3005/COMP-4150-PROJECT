@@ -42,17 +42,11 @@
 
 
 
-
-
-
-
-
-
-
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Home Team" HorizontalAlignment="Left" Margin="238,16,0,0" VerticalAlignment="Top" Height="24"/>
         <Label Content="Away Team" HorizontalAlignment="Left" Margin="240,36,0,0" VerticalAlignment="Top"/>
         <Label Content="Please Enter Only One Team" HorizontalAlignment="Center" Margin="0,-6,0,0" VerticalAlignment="Top"/>
+        <Button Content="Popular Teams" HorizontalAlignment="Left" Margin="564,46,0,0" VerticalAlignment="Top" Click="Button_Click"/>
     </Grid>
 </Window>

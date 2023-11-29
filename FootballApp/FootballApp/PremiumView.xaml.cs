@@ -1,9 +1,9 @@
 ﻿using System.Windows.Controls;
 using System.Data;
-using FootBallAppGUI;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Windows;
+using FootBallAppGUI;
 using System;
 
 namespace FootballApp
@@ -21,8 +21,8 @@ namespace FootballApp
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             // Implement the search functionality here
-            string homeTeam = HomeTeamTextBox.Text;
-            string awayTeam = AwayTeamTextBox.Text;
+            string homeTeam = HomeTeamTextBox.Text.Trim();
+            string awayTeam = AwayTeamTextBox.Text.Trim();
 
             if ((string.IsNullOrEmpty(homeTeam) || homeTeam == "Enter Home Team") && (string.IsNullOrEmpty(awayTeam) || awayTeam == "Enter Away Team"))
             {
@@ -36,6 +36,9 @@ namespace FootballApp
 
             // Display the search results in a DataGrid or any other UI element
             DataGrid.ItemsSource = searchData?.DefaultView;
+
+            // Save the entered team names to the database table 'SearchedTeams'
+            SaveToSearchedTeams(homeTeam, awayTeam);
         }
 
         private DataTable GetSearchResults(string awayTeam, string homeTeam)
@@ -123,5 +126,86 @@ namespace FootballApp
                 AwayTeamTextBox.Text = "";
             }
         }
+
+        private void SaveToSearchedTeams(string homeTeam, string awayTeam)
+{
+    string connectionString = FootballApp.Properties.Settings.Default.asConnectionString;
+
+    using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hussa\Documents\github\Football-Insights-Premier-League\FootballApp\FootballApp\FootballData.mdf;Integrated Security=True;Connect Timeout=30"))
+    {
+        string insertQuery = "INSERT INTO SearchedTeams(team_name)VALUES(@TeamName)";
+
+        try
+        {
+            connection.Open();
+
+            if (!string.IsNullOrEmpty(homeTeam) && homeTeam != "Enter Home Team")
+            {
+                using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@TeamName", homeTeam);
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(awayTeam) && awayTeam != "Enter Away Team")
+            {
+                using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                {
+                    command.Parameters.Clear(); // Clear previous parameters
+                    command.Parameters.AddWithValue("@TeamName", awayTeam);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        catch (SqlException ex)
+        {
+            Debug.WriteLine($"SQL Error: {ex.Message}");
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+}
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hussa\Documents\github\Football-Insights-Premier-League\FootballApp\FootballApp\FootballData.mdf;Integrated Security=True;Connect Timeout=30"))
+                {
+                    connection.Open();
+
+                    string query = "SELECT team_name, COUNT(*) AS PopularTeams " +
+                                   "FROM SearchedTeams " +
+                                   "GROUP BY team_name";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        DataTable dataTable = new DataTable();
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                        {
+                            adapter.Fill(dataTable);
+                        }
+
+                        // Open the new window passing the result DataTable
+                        Favourites countWindow = new Favourites(dataTable);
+                        countWindow.ShowDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+
+
+        }
+        private void CountOccurrencesButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }
