@@ -1,9 +1,9 @@
 ﻿using System.Windows.Controls;
 using System.Data;
-using FootBallAppGUI;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Windows;
+using FootBallAppGUI;
 using System;
 
 namespace FootballApp
@@ -21,8 +21,8 @@ namespace FootballApp
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             // Implement the search functionality here
-            string homeTeam = HomeTeamTextBox.Text;
-            string awayTeam = AwayTeamTextBox.Text;
+            string homeTeam = HomeTeamTextBox.Text.Trim();
+            string awayTeam = AwayTeamTextBox.Text.Trim();
 
             if ((string.IsNullOrEmpty(homeTeam) || homeTeam == "Enter Home Team") && (string.IsNullOrEmpty(awayTeam) || awayTeam == "Enter Away Team"))
             {
@@ -36,6 +36,9 @@ namespace FootballApp
 
             // Display the search results in a DataGrid or any other UI element
             DataGrid.ItemsSource = searchData?.DefaultView;
+
+            // Save the entered team names to the database table 'SearchedTeams'
+            SaveToSearchedTeams(homeTeam, awayTeam);
         }
 
         private DataTable GetSearchResults(string awayTeam, string homeTeam)
@@ -45,7 +48,6 @@ namespace FootballApp
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-<<<<<<< Updated upstream
                 conn.Open(); // Open the connection once
 
                 if (!string.IsNullOrEmpty(homeTeam) && string.IsNullOrEmpty(awayTeam))
@@ -66,11 +68,6 @@ namespace FootballApp
                     MessageBox.Show("Please enter only one team at a time.");
                     return new DataTable(); // Return an empty DataTable
                 }
-=======
-                cmd.CommandText = "SELECT date, season, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE home_team = @HomeTeam";
-                cmd.Parameters.AddWithValue("@HomeTeam", homeTeam);
-                conn.Open();
->>>>>>> Stashed changes
 
                 DataTable result = new DataTable();
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -123,5 +120,50 @@ namespace FootballApp
                 AwayTeamTextBox.Text = "";
             }
         }
+
+        private void SaveToSearchedTeams(string homeTeam, string awayTeam)
+        {
+            string connectionString = FootballApp.Properties.Settings.Default.asConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hussa\Documents\github\Football-Insights-Premier-League\FootballApp\FootballApp\FootballData.mdf;Integrated Security=True;Connect Timeout=30"))
+            {
+                string insertQuery = "INSERT INTO SearchedTeams(team_name)VALUES(@TeamName)";
+
+                try
+                {
+                    connection.Open();
+
+                    if (!string.IsNullOrEmpty(homeTeam) && homeTeam != "Enter Home Team")
+                    {
+                        using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@TeamName", homeTeam);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(awayTeam) && awayTeam != "Enter Away Team")
+                    {
+                        using (SqlCommand command = new SqlCommand(insertQuery, connection))
+                        {
+                            command.Parameters.Clear(); // Clear previous parameters
+                            command.Parameters.AddWithValue("@TeamName", awayTeam);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Debug.WriteLine($"SQL Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+        }
+
+        
+
     }
 }

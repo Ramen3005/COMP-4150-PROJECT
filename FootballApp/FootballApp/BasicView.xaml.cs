@@ -40,7 +40,7 @@ namespace FootballApp
 
         private DataTable GetSearchResults(string homeTeam)
         {
-            var conn = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString);
+            var conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hussa\Documents\github\Football-Insights-Premier-League\FootballApp\FootballApp\FootballData.mdf;Integrated Security=True;Connect Timeout=30");
             try
             {
                 SqlCommand cmd = new SqlCommand();

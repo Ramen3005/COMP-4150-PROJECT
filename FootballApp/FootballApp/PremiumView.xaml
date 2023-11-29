@@ -39,16 +39,6 @@
                 <DataGridTextColumn Header="Away Tackles" Binding="{Binding Path=away_tackles}" />
                 <DataGridTextColumn Header="Home Corners Average" Binding="{Binding Path=corners_avg_home}" />
                 <DataGridTextColumn Header="Away Corners Average" Binding="{Binding Path=corners_avg_away}" />
-
-
-
-
-
-
-
-
-
-
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Home Team" HorizontalAlignment="Left" Margin="238,16,0,0" VerticalAlignment="Top" Height="24"/>
