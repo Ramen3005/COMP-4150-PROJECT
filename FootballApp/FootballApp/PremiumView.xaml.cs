@@ -44,23 +44,24 @@ namespace FootballApp
         private DataTable GetSearchResults(string awayTeam, string homeTeam)
         {
             var conn = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString);
+
             try
             {
+                conn.Open(); // Open the connection once
+
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-<<<<<<< Updated upstream
-                conn.Open(); // Open the connection once
 
                 if (!string.IsNullOrEmpty(homeTeam) && string.IsNullOrEmpty(awayTeam))
                 {
                     // Only Home Team is entered
-                    cmd.CommandText = "SELECT date, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE home_team = @HomeTeam";
+                    cmd.CommandText = "SELECT date, season, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE home_team = @HomeTeam";
                     cmd.Parameters.AddWithValue("@HomeTeam", homeTeam);
                 }
                 else if (string.IsNullOrEmpty(homeTeam) && !string.IsNullOrEmpty(awayTeam))
                 {
                     // Only Away Team is entered
-                    cmd.CommandText = "SELECT date, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE away_team = @AwayTeam";
+                    cmd.CommandText = "SELECT date, season, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE away_team = @AwayTeam";
                     cmd.Parameters.AddWithValue("@AwayTeam", awayTeam);
                 }
                 else
@@ -69,11 +70,6 @@ namespace FootballApp
                     MessageBox.Show("Please enter only one team at a time.");
                     return new DataTable(); // Return an empty DataTable
                 }
-=======
-                cmd.CommandText = "SELECT date, season, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE home_team = @HomeTeam";
-                cmd.Parameters.AddWithValue("@HomeTeam", homeTeam);
-                conn.Open();
->>>>>>> Stashed changes
 
                 DataTable result = new DataTable();
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -94,6 +90,7 @@ namespace FootballApp
                     conn.Close(); // Close the connection in the finally block
             }
         }
+    
 
         private void HomeTeamTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -131,7 +128,7 @@ namespace FootballApp
 {
     string connectionString = FootballApp.Properties.Settings.Default.asConnectionString;
 
-    using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hussa\Documents\github\Football-Insights-Premier-League\FootballApp\FootballApp\FootballData.mdf;Integrated Security=True;Connect Timeout=30"))
+    using (SqlConnection connection = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString))
     {
         string insertQuery = "INSERT INTO SearchedTeams(team_name)VALUES(@TeamName)";
 
@@ -173,7 +170,7 @@ namespace FootballApp
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\hussa\Documents\github\Football-Insights-Premier-League\FootballApp\FootballApp\FootballData.mdf;Integrated Security=True;Connect Timeout=30"))
+                using (SqlConnection connection = new SqlConnection(FootballApp.Properties.Settings.Default.asConnectionString))
                 {
                     connection.Open();
 
