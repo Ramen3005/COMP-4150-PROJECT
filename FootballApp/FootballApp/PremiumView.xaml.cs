@@ -45,6 +45,7 @@ namespace FootballApp
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
+<<<<<<< Updated upstream
                 conn.Open(); // Open the connection once
 
                 if (!string.IsNullOrEmpty(homeTeam) && string.IsNullOrEmpty(awayTeam))
@@ -65,6 +66,11 @@ namespace FootballApp
                     MessageBox.Show("Please enter only one team at a time.");
                     return new DataTable(); // Return an empty DataTable
                 }
+=======
+                cmd.CommandText = "SELECT date, season, home_team, away_team, result_full, result_ht, home_possession, away_possession, home_red_cards, away_red_cards, home_yellow_cards, away_yellow_cards, home_offsides, away_offsides, home_passes, away_passes, home_shots_on_target, away_shots_on_target, home_corners, away_corners, home_tackles, away_tackles, corners_avg_home, corners_avg_away FROM MatchData WHERE home_team = @HomeTeam";
+                cmd.Parameters.AddWithValue("@HomeTeam", homeTeam);
+                conn.Open();
+>>>>>>> Stashed changes
 
                 DataTable result = new DataTable();
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))

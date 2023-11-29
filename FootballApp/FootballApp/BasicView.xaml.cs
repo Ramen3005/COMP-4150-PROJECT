@@ -45,7 +45,7 @@ namespace FootballApp
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "SELECT date, home_team, away_team, result_full, result_ht FROM MatchData WHERE home_team = @HomeTeam";
+                cmd.CommandText = "SELECT date, season, home_team, away_team, result_full, result_ht FROM MatchData WHERE home_team = @HomeTeam";
                 cmd.Parameters.AddWithValue("@HomeTeam", homeTeam);
                 conn.Open();
 

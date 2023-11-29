@@ -15,6 +15,7 @@
         <DataGrid x:Name="DataGrid" Margin="10,79,10,10" AutoGenerateColumns="False" HeadersVisibility="Column">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=date, StringFormat={}{0:MM/dd/yyyy}}" />
+                <DataGridTextColumn Header="Season" Binding="{Binding Path=season}"/>
                 <DataGridTextColumn Header="Home Team" Binding="{Binding Path=home_team}" />
                 <DataGridTextColumn Header="Away Team" Binding="{Binding Path=away_team}" />
                 <DataGridTextColumn Header="Result (Half-Time)" Binding="{Binding Path=result_ht}" />
