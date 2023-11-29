@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FootballApp"
         mc:Ignorable="d"
-        Title="Basic User" Height="450" Width="800" Background="#483D8B">
+        Title="Premium" Height="450" Width="800" Background="#483D8B">
     <Grid>
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0" Visibility="Visible">
-            <TextBox x:Name="HomeTeamTextBox" Width="150" Margin="0,0,0,10" Text="Enter Home Team" GotFocus="HomeTeamTextBox_GotFocus" LostFocus="HomeTeamTextBox_LostFocus"/>
+            <TextBox x:Name="HomeTeamTextBox" Width="150" Margin="0,0,0,2" Text="" GotFocus="HomeTeamTextBox_GotFocus" LostFocus="HomeTeamTextBox_LostFocus"/>
+            <TextBox x:Name="AwayTeamTextBox" Width="150" Margin="0,0,0,01" Text="" GotFocus="AwayTeamTextBox_GotFocus" LostFocus="AwayTeamTextBox_LostFocus"/>
             <Button Content="Search" Click="SearchButton_Click" Width="80"/>
         </StackPanel>
 
@@ -37,17 +38,20 @@
                 <DataGridTextColumn Header="Away Tackles" Binding="{Binding Path=away_tackles}" />
                 <DataGridTextColumn Header="Home Corners Average" Binding="{Binding Path=corners_avg_home}" />
                 <DataGridTextColumn Header="Away Corners Average" Binding="{Binding Path=corners_avg_away}" />
-                
-                
-                
-                
-                
-                
-                
-                
-                
-            
+
+
+
+
+
+
+
+
+
+
             </DataGrid.Columns>
         </DataGrid>
+        <Label Content="Home Team" HorizontalAlignment="Left" Margin="238,16,0,0" VerticalAlignment="Top" Height="24"/>
+        <Label Content="Away Team" HorizontalAlignment="Left" Margin="240,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="Please Enter Only One Team" HorizontalAlignment="Center" Margin="0,-6,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

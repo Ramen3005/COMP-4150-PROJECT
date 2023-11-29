@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FootballApp"
         mc:Ignorable="d"
-        Title="Basic User" Height="450" Width="800" Background="#483D8B">
+        Title="Basic" Height="450" Width="800" Background="#483D8B">
     <Grid>
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0" Visibility="Visible">
             <TextBox x:Name="HomeTeamTextBox" Width="150" Margin="0,0,0,10" Text="Enter Home Team" GotFocus="HomeTeamTextBox_GotFocus" LostFocus="HomeTeamTextBox_LostFocus"/>
